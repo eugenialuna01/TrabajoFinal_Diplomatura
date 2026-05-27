@@ -1,7 +1,7 @@
-⚽ TorneoPro — Sistema de Gestión Deportiva
+###⚽ TorneoPro — Sistema de Gestión Deportiva
 TorneoPro es una aplicación web desarrollada para la administración de torneos deportivos de manera profesional y moderna. La plataforma permite gestionar torneos, equipos, jugadores, partidos y tablas de posiciones desde un panel intuitivo y dinámico. 🏆
 
-🚀 ¿Qué permite hacer la aplicación?
+###🚀 ¿Qué permite hacer la aplicación?
 La app permite:
 ✅ Crear y administrar torneos deportivos
 ✅ Registrar equipos participantes
@@ -12,10 +12,10 @@ La app permite:
 ✅ Controlar accesos mediante roles y permisos
 ✅ Mostrar información en tiempo real desde una interfaz moderna
 
-👥 Usuarios del sistema
+###👥 Usuarios del sistema
 La aplicación posee distintos tipos de usuarios con permisos específicos.
 
-👤 Usuario
+##👤 Usuario
 El usuario común puede visualizar la información general del sistema.
 Permisos:
 ✔ Ver torneos
@@ -24,7 +24,7 @@ Permisos:
 ✔ Ver partidos
 ✔ Ver tabla de posiciones
 
-🧑‍🏫 Entrenador
+##🧑‍🏫 Entrenador
 El entrenador puede administrar su equipo y sus jugadores.
 Permisos:
 ✔ Ver torneos
