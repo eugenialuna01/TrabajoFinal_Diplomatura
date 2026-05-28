@@ -1,16 +1,183 @@
-###⚽ TorneoPro — Sistema de Gestión Deportiva
-TorneoPro es una aplicación web desarrollada para la administración de torneos deportivos de manera profesional y moderna. La plataforma permite gestionar torneos, equipos, jugadores, partidos y tablas de posiciones desde un panel intuitivo y dinámico. 🏆
+# ⚽ TorneoPro
 
-###🚀 ¿Qué permite hacer la aplicación?
-La app permite:
-✅ Crear y administrar torneos deportivos
-✅ Registrar equipos participantes
-✅ Gestionar jugadores por equipo
-✅ Crear fixtures y partidos
-✅ Cargar resultados deportivos
-✅ Generar automáticamente tablas de posiciones
-✅ Controlar accesos mediante roles y permisos
-✅ Mostrar información en tiempo real desde una interfaz moderna
+> Sistema web de gestión de torneos deportivos desarrollado con MERN Stack.
+
+---
+
+## 🏆 Características
+
+- ✅ Gestión de torneos
+- ✅ Gestión de equipos
+- ✅ Gestión de jugadores
+- ✅ Gestión de partidos
+- ✅ Tabla de posiciones automática
+- ✅ Sistema de roles y permisos
+- ✅ Dashboard administrativo
+- ✅ Integración con APIs deportivas
+
+---
+
+# 👥 Roles del sistema
+
+## 👤 Usuario
+
+- Ver torneos
+- Ver equipos
+- Ver jugadores
+- Ver partidos
+- Ver tabla de posiciones
+
+---
+
+## 🧑‍🏫 Entrenador
+
+- Crear equipos
+- Editar equipos
+- Crear jugadores
+- Editar jugadores
+- Eliminar jugadores
+- Ver partidos
+- Ver standings
+
+---
+
+## 👑 Administrador
+
+- CRUD de torneos
+- CRUD de equipos
+- CRUD de jugadores
+- CRUD de partidos
+- Gestión de usuarios
+- Gestión de standings
+
+---
+
+# 🔐 Permisos dinámicos
+
+```txt
+tournament:create
+team:update
+player:delete
+match:read
+standings:read
+user:update
+```
+
+---
+
+# ⚙️ Tecnologías utilizadas
+
+## 🎨 Frontend
+
+- React.js
+- Vite
+- Tailwind CSS
+- React Hook Form
+- React Router DOM
+- SweetAlert2
+- React Toastify
+
+---
+
+## 🖥 Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT Authentication
+
+---
+
+# 📊 Funcionalidades deportivas
+
+## ⚽ Partidos
+
+- Crear fixtures
+- Cargar resultados
+- Actualizar estado de partidos
+
+---
+
+## 📈 Tabla de posiciones
+
+Cálculo automático de:
+
+- Puntos
+- Victorias
+- Empates
+- Derrotas
+- Diferencia de gol
+
+---
+
+# 🌍 Integración externa
+
+La aplicación permite importar información real desde:
+
+- ⚽ TheSportsDB API
+
+---
+
+# 🚀 Instalación
+
+## 1️⃣ Clonar repositorio
+
+```bash
+git clone https://github.com/TU_USUARIO/TU_REPO.git
+```
+
+---
+
+## 2️⃣ Instalar dependencias
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+```
+
+### Backend
+
+```bash
+cd backend
+npm install
+```
+
+---
+
+# ▶️ Ejecutar proyecto
+
+## Backend
+
+```bash
+npm run dev
+```
+
+## Frontend
+
+```bash
+npm run dev
+```
+
+---
+
+# 🔑 Variables de entorno
+
+Crear `.env` en backend:
+
+```env
+PORT=5000
+MONGO_URL=TU_MONGO_URI
+JWT_SECRET=SECRET_KEY
+```
+
+---
+
+# 👨‍💻 Autor
+
+Desarrollado por Eugenia Luna 💻
 
 ###👥 Usuarios del sistema
 La aplicación posee distintos tipos de usuarios con permisos específicos.
