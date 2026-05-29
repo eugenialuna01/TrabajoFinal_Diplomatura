@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
 import { usePlayers } from "../context/PlayerContext";
 import { useTeams } from "../context/TeamContext";
 import { useAuth } from "../context/AuthContext";
@@ -25,6 +24,7 @@ const Players = () => {
 
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState("");
 
   const {
     register,
@@ -59,7 +59,7 @@ const Players = () => {
       } else {
         await addPlayer(payload);
          toast.success(
-  "Juagador creado correctamente"
+  "Jugador creado correctamente"
 );
       }
 
@@ -130,6 +130,24 @@ if (!result.isConfirmed) return;
   "Jugador eliminado correctamente"
 );
   };
+
+  const getPlayerTeamId = (player) =>
+    player.team?._id || player.team || "";
+
+  const getPlayersByTeamCount = (teamId) =>
+    players.filter(
+      (player) => getPlayerTeamId(player) === teamId
+    ).length;
+
+  const filteredPlayers = selectedTeam
+    ? players.filter(
+        (player) => getPlayerTeamId(player) === selectedTeam
+      )
+    : players;
+
+  const selectedTeamName =
+    teams.find((team) => team._id === selectedTeam)?.name ||
+    "todos los equipos";
 
   if (!can(user, "player:read")) {
     return (
@@ -253,9 +271,12 @@ if (!result.isConfirmed) return;
                   <option value="Delantero">Delantero</option>
                   <option value="Base">Base</option>
                   <option value="Escolta">Escolta</option>
+                  <option value="Zaguero">Zaguero</option>
                   <option value="Alero">Alero</option>
                   <option value="Pivot">Pivot</option>
                   <option value="Universal">Universal</option>
+                  <option value="Pilar">Pilar</option>
+                  <option value="Hooker">Hooker</option>
                 </select>
 
                 {errors.position && (
@@ -328,12 +349,82 @@ if (!result.isConfirmed) return;
           </form>
         )}
 
-        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-slate-200">
-            <h2 className="text-xl font-bold text-slate-800">
-              Listado de jugadores
-            </h2>
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6 items-start">
+          <aside className="bg-white border border-slate-200 rounded-2xl shadow-sm p-5">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <h2 className="text-lg font-bold text-slate-800">
+                Filtrar por equipo
+              </h2>
+
+              {selectedTeam && (
+                <button
+                  type="button"
+                  onClick={() => setSelectedTeam("")}
+                  className="text-sm font-semibold text-green-700 hover:text-green-800"
+                >
+                  Limpiar
+                </button>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <button
+                type="button"
+                onClick={() => setSelectedTeam("")}
+                className={`w-full flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-left font-semibold transition ${
+                  selectedTeam === ""
+                    ? "bg-green-600 text-white"
+                    : "bg-slate-50 text-slate-700 hover:bg-slate-100"
+                }`}
+              >
+                <span>Todos</span>
+                <span
+                  className={`text-sm ${
+                    selectedTeam === ""
+                      ? "text-green-100"
+                      : "text-slate-500"
+                  }`}
+                >
+                  {players.length}
+                </span>
+              </button>
+
+              {teams.map((team) => (
+                <button
+                  key={team._id}
+                  type="button"
+                  onClick={() => setSelectedTeam(team._id)}
+                  className={`w-full flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-left font-semibold transition ${
+                    selectedTeam === team._id
+                      ? "bg-green-600 text-white"
+                      : "bg-slate-50 text-slate-700 hover:bg-slate-100"
+                  }`}
+                >
+                  <span className="truncate">{team.name}</span>
+                  <span
+                    className={`text-sm ${
+                      selectedTeam === team._id
+                        ? "text-green-100"
+                        : "text-slate-500"
+                    }`}
+                  >
+                    {getPlayersByTeamCount(team._id)}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </aside>
+
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+            <div className="p-6 border-b border-slate-200">
+              <h2 className="text-xl font-bold text-slate-800">
+                Listado de jugadores
+              </h2>
+
+              <p className="text-sm text-slate-500 mt-1">
+                Mostrando {filteredPlayers.length} de {players.length} jugadores de {selectedTeamName}.
+              </p>
+            </div>
 
           {loading ? (
             <p className="p-6 text-slate-500">
@@ -342,6 +433,10 @@ if (!result.isConfirmed) return;
           ) : players.length === 0 ? (
             <p className="p-6 text-slate-500">
               Todavía no hay jugadores cargados.
+            </p>
+          ) : filteredPlayers.length === 0 ? (
+            <p className="p-6 text-slate-500">
+              No hay jugadores cargados para este equipo.
             </p>
           ) : (
             <div className="overflow-x-auto">
@@ -359,7 +454,7 @@ if (!result.isConfirmed) return;
                 </thead>
 
                 <tbody className="divide-y divide-slate-200">
-                  {players.map((player) => (
+                  {filteredPlayers.map((player) => (
                     <tr
                       key={player._id}
                       className="hover:bg-slate-50"
@@ -416,6 +511,7 @@ if (!result.isConfirmed) return;
             </div>
           )}
 
+          </div>
         </div>
       </div>
     </section>

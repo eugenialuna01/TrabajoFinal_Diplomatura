@@ -56,14 +56,26 @@ const Navbar = () => {
 
               <Link
                 to="/equipos"
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition"
+                className="px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition whitespace-nowrap"
               >
                 Equipos
               </Link>
 
+              {(user?.role === "admin" ||
+                user?.role === "coach") && (
+                <Link
+                  to="/jugadores"
+                  className="px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition whitespace-nowrap"
+                >
+                  {user?.role === "admin"
+                    ? "Jugadores"
+                    : "Mi equipo"}
+                </Link>
+              )}
+
               <Link
                 to="/partidos"
-                className="px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition"
+                className="px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition whitespace-nowrap"
               >
                 Partidos
               </Link>
@@ -76,15 +88,7 @@ const Navbar = () => {
                   Usuarios
                 </Link>
               )}
-
-              {user?.role === "coach" && (
-                <Link
-                  to="/jugadores"
-                  className="px-4 py-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition"
-                >
-                  Jugadores
-                </Link>
-              )}
+              
 
             </div>
           ) : null}

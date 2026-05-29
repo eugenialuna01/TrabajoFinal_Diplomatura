@@ -167,6 +167,17 @@ if (!result.isConfirmed) return;
     
   };
 
+  const formatMatchDate = (date) => {
+    if (!date) return "Sin fecha";
+
+    return new Date(date).toLocaleDateString("es-AR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+  };
+
   return (
     <section className="min-h-screen bg-slate-100 p-6">
       <div className="max-w-6xl mx-auto space-y-6">
@@ -352,6 +363,7 @@ if (!result.isConfirmed) return;
                 <thead className="bg-slate-50 text-slate-600 text-sm uppercase">
                   <tr>
                     <th className="px-6 py-4">Torneo</th>
+                    <th className="px-6 py-4">Fecha</th>
                     <th className="px-6 py-4">Partido</th>
                     <th className="px-6 py-4">Resultado</th>
                     <th className="px-6 py-4">Estado</th>
@@ -367,6 +379,10 @@ if (!result.isConfirmed) return;
                     >
                       <td className="px-6 py-4 text-slate-600">
                         {match.tournament?.name || "Sin torneo"}
+                      </td>
+
+                      <td className="px-6 py-4 text-slate-600">
+                        {formatMatchDate(match.date)}
                       </td>
 
                       <td className="px-6 py-4 font-semibold text-slate-800">

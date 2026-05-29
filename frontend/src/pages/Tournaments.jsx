@@ -132,6 +132,17 @@ if (!result.isConfirmed) return;
     
   };
 
+  const formatTournamentDate = (date) => {
+    if (!date) return "Sin fecha";
+
+    return new Date(date).toLocaleDateString("es-AR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+  };
+
   return (
     <section className="min-h-screen bg-slate-100 p-6">
       <div className="max-w-6xl mx-auto space-y-6">
@@ -348,6 +359,8 @@ if (!result.isConfirmed) return;
                     <th className="px-6 py-4">Torneo</th>
                     <th className="px-6 py-4">Deporte</th>
                     <th className="px-6 py-4">Categoría</th>
+                    <th className="px-6 py-4">Inicio</th>
+                    <th className="px-6 py-4">Finalizacion</th>
                     <th className="px-6 py-4">Estado</th>
                     <th className="px-6 py-4 text-right"></th>
                   </tr>
@@ -366,6 +379,14 @@ if (!result.isConfirmed) return;
 
                       <td className="px-6 py-4 text-slate-600">
                         {tournament.category}
+                      </td>
+
+                      <td className="px-6 py-4 text-slate-600">
+                        {formatTournamentDate(tournament.startDate)}
+                      </td>
+
+                      <td className="px-6 py-4 text-slate-600">
+                        {formatTournamentDate(tournament.endDate)}
                       </td>
 
                       <td className="px-6 py-4">

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTeams } from "../context/TeamContext";
+import { usePlayers } from "../context/PlayerContext";
 import { useTournaments } from "../context/TournamentContext";
 import { can } from "../utils/permissions";
 import { useAuth } from "../context/AuthContext";
@@ -10,6 +11,7 @@ import { toast } from "react-toastify";
 const MySwal =withReactContent(Swal);
 const Teams = () => {
   const {teams,loading,addTeam,editTeam,removeTeam,} = useTeams();
+  const { players } = usePlayers();
   const { user } = useAuth();
   const { tournaments } = useTournaments();
 
@@ -107,6 +109,14 @@ if (!result.isConfirmed) return;
     "Equipo eliminado correctamente"
   );
   };
+
+  const getPlayerTeamId = (player) =>
+    player.team?._id || player.team || "";
+
+  const getTeamPlayers = (teamId) =>
+    players.filter(
+      (player) => getPlayerTeamId(player) === teamId
+    );
 
   return (
     <section className="min-h-screen bg-slate-100 p-6">
@@ -261,47 +271,66 @@ if (!result.isConfirmed) return;
                     <th className="px-6 py-4">Equipo</th>
                     <th className="px-6 py-4">Entrenador</th>
                     <th className="px-6 py-4">Torneo</th>
+                    <th className="px-6 py-4">Jugadores</th>
                     <th className="px-6 py-4 text-right"></th>
                   </tr>
                 </thead>
 
                 <tbody className="divide-y divide-slate-200">
-                  {teams.map((team) => (
-                    <tr key={team._id} className="hover:bg-slate-50">
-                      <td className="px-6 py-4 font-semibold text-slate-800">
-                        {team.name}
-                      </td>
+                  {teams.map((team) => {
+                    const teamPlayers = getTeamPlayers(team._id);
 
-                      <td className="px-6 py-4 text-slate-600">
-                        {team.coachName}
-                      </td>
+                    return (
+                      <tr key={team._id} className="hover:bg-slate-50">
+                        <td className="px-6 py-4 font-semibold text-slate-800">
+                          {team.name}
+                        </td>
 
-                      <td className="px-6 py-4 text-slate-600">
-                        {team.tournament?.name || "Sin torneo"}
-                      </td>
+                        <td className="px-6 py-4 text-slate-600">
+                          {team.coachName}
+                        </td>
 
-                      <td className="px-6 py-4">
-                        <div className="flex justify-end gap-2">
-                         {can(user, "team:update") && (
-                          <button
-                            onClick={() => handleEdit(team)}
-                            className="bg-amber-100 hover:bg-amber-200 text-amber-700 px-4 py-2 rounded-lg font-semibold transition"
-                          >
-                            Editar
-                          </button>
+                        <td className="px-6 py-4 text-slate-600">
+                          {team.tournament?.name || "Sin torneo"}
+                        </td>
+
+                        <td className="px-6 py-4 text-slate-600">
+                          {teamPlayers.length === 0 ? (
+                            <span className="text-slate-400">
+                              Sin jugadores
+                            </span>
+                          ) : (
+                            <p className="max-w-xs text-sm text-slate-600">
+                              {teamPlayers
+                                .map((player) => player.fullName)
+                                .join(", ")}
+                            </p>
                           )}
-                          {can(user, "team:delete") && (
-                          <button
-                            onClick={() => handleDelete(team._id)}
-                            className="bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-lg font-semibold transition"
-                          >
-                            Eliminar
-                          </button>
-                          )}
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <div className="flex justify-end gap-2">
+                           {can(user, "team:update") && (
+                            <button
+                              onClick={() => handleEdit(team)}
+                              className="bg-amber-100 hover:bg-amber-200 text-amber-700 px-4 py-2 rounded-lg font-semibold transition"
+                            >
+                              Editar
+                            </button>
+                            )}
+                            {can(user, "team:delete") && (
+                            <button
+                              onClick={() => handleDelete(team._id)}
+                              className="bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-lg font-semibold transition"
+                            >
+                              Eliminar
+                            </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
